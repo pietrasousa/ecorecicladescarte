@@ -31,6 +31,141 @@
       overflow-x: hidden;
     }
 
+    /* ===== SPLASH SCREEN ===== */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(160deg, #1b4332 0%, #2d6a4f 45%, #40916c 80%, #74c69d 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      text-align: center;
+      padding: 32px 24px;
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    #splash.hiding {
+      opacity: 0;
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+
+    .splash-leaves {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .splash-leaf {
+      position: absolute;
+      font-size: 2.5rem;
+      opacity: 0.08;
+      animation: floatLeaf linear infinite;
+    }
+
+    @keyframes floatLeaf {
+      0%   { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
+
+    .splash-logo {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(3rem, 10vw, 5rem);
+      color: #fff;
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 6px;
+      animation: splashPop 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    .splash-logo span { color: var(--amarelo); }
+
+    .splash-tagline {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 48px;
+      font-weight: 600;
+      animation: splashFade 0.8s 0.2s ease both;
+    }
+
+    @keyframes splashPop {
+      from { opacity: 0; transform: scale(0.6) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes splashFade {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .splash-features {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 52px;
+      animation: splashFade 0.8s 0.35s ease both;
+    }
+
+    .splash-feat {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 14px;
+      padding: 14px 20px;
+      color: #fff;
+      min-width: 130px;
+      max-width: 160px;
+    }
+
+    .splash-feat .sf-icon { font-size: 2rem; margin-bottom: 6px; display: block; }
+    .splash-feat .sf-label { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
+
+    .btn-start {
+      padding: 18px 52px;
+      background: var(--amarelo);
+      color: var(--verde);
+      border: none;
+      border-radius: 50px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(249,199,79,0.45);
+      transition: all 0.2s;
+      animation: splashFade 0.8s 0.5s ease both;
+      position: relative;
+    }
+
+    .btn-start:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 16px 48px rgba(249,199,79,0.6);
+    }
+
+    .btn-start:active { transform: scale(0.97); }
+
+    .btn-start::after {
+      content: '→';
+      margin-left: 10px;
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-start:hover::after { transform: translateX(4px); }
+
+    .splash-footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      animation: splashFade 1s 0.8s ease both;
+    }
+
+    /* hide app shell while splash is shown */
+    #app-shell { display: none; }
+
     /* ===== NAV ===== */
     nav {
       background: var(--verde);
@@ -826,6 +961,40 @@
 </head>
 <body>
 
+<!-- ========== SPLASH SCREEN ========== -->
+<div id="splash">
+  <div class="splash-leaves" id="splash-leaves"></div>
+
+  <div class="splash-logo">🌱 Eco<span>Recicla</span></div>
+  <div class="splash-tagline">Recicle, aprenda e proteja o planeta 🌍</div>
+
+  <div class="splash-features">
+    <div class="splash-feat">
+      <span class="sf-icon">♻️</span>
+      <div class="sf-label">Registre reciclagens</div>
+    </div>
+    <div class="splash-feat">
+      <span class="sf-icon">🎮</span>
+      <div class="sf-label">Jogue e aprenda</div>
+    </div>
+    <div class="splash-feat">
+      <span class="sf-icon">🗑️</span>
+      <div class="sf-label">Descarte correto</div>
+    </div>
+    <div class="splash-feat">
+      <span class="sf-icon">⭐</span>
+      <div class="sf-label">Ganhe pontos</div>
+    </div>
+  </div>
+
+  <button class="btn-start" onclick="iniciarApp()">Começar Agora</button>
+
+  <div class="splash-footer">Feito para quem ama o planeta 💚</div>
+</div>
+
+<!-- ========== APP SHELL ========== -->
+<div id="app-shell">
+
 <nav>
   <div class="nav-logo">🌱 Eco<span>Recicla</span></div>
   <div class="nav-links">
@@ -1175,6 +1344,8 @@
   </div>
 
 </div>
+
+</div><!-- end #app-shell -->
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
@@ -1653,6 +1824,32 @@
   buildCards();
   shuffleQuiz();
   loadQuestion();
+
+  // ===================== SPLASH =====================
+  function iniciarApp() {
+    const splash = document.getElementById('splash');
+    splash.classList.add('hiding');
+    setTimeout(() => {
+      splash.style.display = 'none';
+      document.getElementById('app-shell').style.display = 'block';
+    }, 700);
+  }
+
+  // Generate floating leaves
+  (function() {
+    const container = document.getElementById('splash-leaves');
+    const leafEmojis = ['🍃','🌿','🌱','♻️','🍀'];
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('span');
+      el.className = 'splash-leaf';
+      el.textContent = leafEmojis[i % leafEmojis.length];
+      el.style.left = (Math.random() * 100) + '%';
+      el.style.animationDuration = (8 + Math.random() * 12) + 's';
+      el.style.animationDelay = '-' + (Math.random() * 15) + 's';
+      el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+      container.appendChild(el);
+    }
+  })();
 </script>
 </body>
 </html>
